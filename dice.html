@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+    body {
+        margin: 0;
+        color: white;
+        overflow: hidden;
+    }
+
+    button {
+        cursor: pointer;
+        box-shadow: 0 11px 0px 0px #634555;
+    }
+
+    button:active {
+        box-shadow: 0px 4px 0px 0px rgb(54, 54, 54);
+        translate: 0px 6px;
+    }
+
+    /* .playing-ground {
+        display: flex;
+        width: 70%;
+        height: 800px;
+        position: relative;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        justify-content: center;
+    } */
+
+    .playerarea1,
+    .playerarea2 {
+        /* flex: 1;
+        padding: 25px; */
+        text-align: center;
+        /* display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center; */
+        background-color: rgb(190, 121, 138);
+        opacity: 0.6;
+        transition: 0.5s;
+    }
+
+    .playerarea1 {
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+    }
+
+    .playerarea2 {
+        border-top-right-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+
+    .playerarea1 h1:nth-child(1),
+    .playerarea2 h1:nth-child(1) {
+        color: black;
+        font-weight: 900;
+        /* font-size: 50px; */
+    }
+
+    .playerarea1 h1:nth-child(2),
+    .playerarea2 h1:nth-child(2) {
+        color: rgb(204, 35, 92);
+        margin: 0;
+        /* font-size: 70px; */
+    }
+
+    .playerarea1 .shape,
+    .playerarea2 .shape {
+        background-color: rgb(204, 35, 92);
+        /* font-size: 25px; */
+        border-radius: 20px;
+    }
+
+    .active {
+        opacity: 1;
+    }
+
+    .dice-image {
+        width: 120px;
+        height: 120px;
+        position: absolute;
+        z-index: 5;
+        background-color: rgb(255, 255, 255);
+        border-radius: 15px;
+        box-shadow: 0px 0px 10px inset black;
+        top: 25%;
+        transition: 0.5s;
+    }
+
+    .new-game,
+    .roll,
+    .hold {
+        /* font-size: 20px; */
+        font-weight: 900;
+        position: absolute;
+        padding: 10px 25px;
+        z-index: 5;
+        background-color: rgba(255, 255, 255, 0.603);
+        border-radius: 15px;
+        top: 7%;
+        border: none;
+    }
+
+    .roll {
+        top: 65%;
+    }
+
+    .hold {
+        top: 78%;
+    }
+
+    .winner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 500;
+        /* font-size: 150px; */
+        width: 100%;
+        text-align: center;
+        font-weight: 900;
+        animation: winner 2s ease-in-out infinite;
+        visibility: hidden;
+        transition: 0.5s;
+    }
+
+    @keyframes winner {
+        0% {
+            scale: 0.2;
+            top: 50%;
+            left: 10%;
+
+        }
+
+        50% {
+            scale: 1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        100% {
+            scale: 0.2;
+            top: 50%;
+            left: 10%;
+        }
+    }
+
+    .overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        opacity: 0.8;
+        z-index: 400;
+        transition: 0.5s;
+        visibility: hidden;
+    }
+
+    .show {
+        visibility: visible;
+    }
+
+    .gradiant {
+        background-image: linear-gradient(to right, rgb(109, 22, 51), rgb(27, 1, 16));
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+</style>
+
+<body>
+    <div class="gradiant"></div>
+    <div class="winner">🎉Player is Winner</div>
+    <div class="overlay"></div>
+    <div class="min-w-screnn min-h-screen flex justify-center items-center">
+        <div class="playing-ground flex md:flex-row flex-col relative justify-center md:w-11/12 w-full h-[90vh]">
+            <button class="new-game md:flex hidden">New Game</button>
+            <button class="roll md:flex hidden">Roll Dice</button>
+            <button class="hold md:flex hidden">Hold</button>
+            <button class="new-game md:flex hidden">New Game</button>
+            <button class="new-game flex md:hidden top-[-15px] left-1/2 translate-x-[-50%]">New Game</button>
+            <button class="roll flex md:hidden top-[40%] left-5">Roll Dice</button>
+            <button class="hold flex md:hidden top-[52%] left-8">Hold</button>
+            <div
+                class="playerarea1 md:rounded-l-[50px] rounded-none grow flex md:flex-col justify-evenly sm:py-10 py-5 sm:px-10 px-2 items-center lg:text-[30px] text-[23px] active">
+                <div>
+                    <h1>PLAYER 1</h1>
+                    <h1 class="p1score m-0">0</h1>
+                </div>
+                <div class="shape sm:px-20 px-7 md:py-10 py-5">
+                    <p>CURRENT</p>
+                    <h2 class="p1-current-score">0</h2>
+                </div>
+            </div>
+            <img class="dice-image md:flex hidden" src="dice5.png" alt="">
+            <img class="dice-image flex md:hidden top-[50%] translate-y-[-50%] right-10 w-20 h-20" src="dice5.png"
+                alt="">
+            <div
+                class="playerarea2 md:rounded-r-[50px] rounded-none grow flex md:flex-col justify-evenly sm:py-10 py-5 sm:px-10 px-2 items-center lg:text-[30px] text-[23px]">
+                <div>
+                    <h1>PLAYER 2</h1>
+                    <h1 class="p2score m-0">0</h1>
+                </div>
+                <div class="shape sm:px-20 px-7 md:py-10 py-5">
+                    <p>CURRENT</p>
+                    <h2 class="p2-current-score">0</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="dice.js"></script>
+</body>
+
+</html>
